@@ -49,7 +49,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_KEY }} 
       
-      
+
       - name: Configure Artifact Registry Auth
         run: |
           gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
@@ -64,8 +64,6 @@ jobs:
           gcloud compute ssh ${{ secrets.GCP_VM_NAME }} --zone ${{ secrets.GCP_VM_ZONE }} \
           --tunnel-through-iap \
           --command="
-          sudo apt update && sudo apt upgrade -y &&
-          sudo apt install -y docker.io &&
           gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev &&
           sudo docker system prune -a -f &&
           sudo docker pull ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest &&
