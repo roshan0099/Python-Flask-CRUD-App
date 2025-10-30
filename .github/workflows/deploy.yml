@@ -66,5 +66,11 @@ jobs:
           --command="
           docker system prune -a -f &&
           docker pull ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest &&
-          docker run -d -p 5000:5000 --name flask-crud-app ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest"
+          docker run -d \
+          -p 5000:5000 \
+          --name flask-crud-app \
+          --network host \
+          -e GOOGLE_CLOUD_PROJECT=${{ secrets.GCP_PROJECT_ID }} \
+          ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest
+          "
         
