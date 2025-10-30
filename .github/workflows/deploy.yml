@@ -64,7 +64,6 @@ jobs:
           gcloud compute ssh ${{ secrets.GCP_VM_NAME }} --zone ${{ secrets.GCP_VM_ZONE }} \
           --tunnel-through-iap \
           --command="
-          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev &&
           sudo docker system prune -a -f &&
           sudo docker pull ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest &&
           sudo docker run -d -p 5000:5000 --name flask-crud-app ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest"
