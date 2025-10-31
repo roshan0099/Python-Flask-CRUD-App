@@ -61,9 +61,11 @@ jobs:
       
       - name: Deploy to the VM 
         run: |
-          gcloud compute ssh ${{ secrets.GCP_VM_NAME }} --zone ${{ secrets.GCP_VM_ZONE }} \
+         gcloud compute ssh ${{ secrets.GCP_VM_NAME }} --zone ${{ secrets.GCP_VM_ZONE }} \
           --tunnel-through-iap \
           --command="
+          docker stop \$(docker ps -aq) || true &&
+          docker rm \$(docker ps -aq) || true &&
           docker system prune -a -f &&
           docker pull ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/flask-crud-app:latest &&
           docker run -d \
