@@ -20,6 +20,11 @@ db_config = {
 def get_connection():
     return psycopg2.connect(**db_config)
 
+@app.route('/health')
+def health():
+    return 'ok'
+
+
 @app.route('/')
 def index():
     conn = get_connection()
